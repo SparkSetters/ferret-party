@@ -1,3 +1,3 @@
 # ferret-party
 
-flask + deeplake + chainlang = ???
+flask + deeplake + langchain = ???
