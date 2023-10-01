@@ -5,13 +5,12 @@ name = "pypi"
 
 [packages]
 deeplake = "*"
-fastapi = "*"
 uvicorn = {extras = ["standard"], version = "*"}
 python-jose = "*"
 httpx = "*"
+litestar = "*"
 
 [dev-packages]
-fastapi = "*"
 
 [requires]
 python_version = "3.11"
