@@ -5,8 +5,8 @@ from langchain.agents import initialize_agent, Tool
 from langchain.agents import AgentType
 from langchain.llms import OpenAI
 from langchain.chains import RetrievalQA
-from dotenv import load_dotenv
-load_dotenv()
+# from dotenv import load_dotenv
+# load_dotenv()
 
 
 def embed_test(texts):
