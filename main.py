@@ -57,6 +57,6 @@ def search_google(query):
     return result
 
 if __name__ == "__main__":
-    query = "OpenAI GPT-4 capabilities"
+    query = "What's the date?"
     response = search_google(query)
     print(response)

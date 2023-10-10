@@ -8,7 +8,7 @@ start = "uvicorn main:app --reload --port 8000"
 
 [packages]
 deeplake = "*"
-uvicorn = {extras = ["standard"], version = "*"}
+uvicorn = "*"
 python-jose = "*"
 httpx = "*"
 litestar = "*"
