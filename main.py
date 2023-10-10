@@ -9,6 +9,8 @@ from typing import Callable
 from litestar.config.allowed_hosts import AllowedHostsConfig
 from litestar.status_codes import HTTP_200_OK
 
+# print(os.environ['ACTIVELOOP_TOKEN'])
+
 
 class TestResponse(BaseModel):
     message: str
@@ -32,42 +34,9 @@ cors_config = CORSConfig(allow_origins=allowedOrigins,
                          max_age=600)
 
 
-# def validate_jwt(request: Request) -> bool:
-#     token = request.headers.get("Authorization", "")
-#     # print("token here" + request.headers)
-#     if not token:
-#         raise NotAuthorizedException("JWT not found in headers.")
-
-#     token = token.replace("Bearer ", "")
-#     JWT_SECRET = os.environ.get("SUPABASE_JWT_SECRET")
-#     JWT_ALGORITHM = os.environ.get("SUPABASE_JWT_ALGORITHM")
-
-#     if not JWT_SECRET or not JWT_ALGORITHM:
-#         raise NotAuthorizedException("Invalid JWT configuration.")
-
-#     try:
-#         decoded = jwt.decode(token, JWT_SECRET, algorithms=JWT_ALGORITHM)
-#         return True
-#     except JWTError:
-#         raise NotAuthorizedException("Invalid JWT token.")
-
-
-# def jwt_authentication_middleware_factory(app: ASGIApp) -> ASGIApp:
-#     async def jwt_authentication_middleware(scope: Scope, receive: Receive, send: Send) -> None:
-#         request = Request(scope, receive=receive)
-#         try:
-#             print(await scope)
-#             validate_jwt(request)
-#             await app(scope, receive, send)
-#         except NotAuthorizedException as e:
-#             raise e
-
-#     return jwt_authentication_middleware
-
-
 class MyTest(Controller):
     @get(path="/", status_code=HTTP_200_OK)
-    def validate_route_handler(self) -> TestResponse:
+    async def validate_route_handler(self) -> TestResponse:
         return TestResponse(message="Response from Litestar")
 
 

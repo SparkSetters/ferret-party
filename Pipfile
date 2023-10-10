@@ -12,6 +12,11 @@ uvicorn = {extras = ["standard"], version = "*"}
 python-jose = "*"
 httpx = "*"
 litestar = "*"
+langchain = "==0.0.208"
+openai = "*"
+tiktoken = "*"
+python-dotenv = "*"
+google-api-python-client = "*"
 
 [dev-packages]
 
