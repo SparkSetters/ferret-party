@@ -12,7 +12,7 @@ uvicorn = {extras = ["standard"], version = "*"}
 python-jose = "*"
 httpx = "*"
 litestar = "*"
-langchain = "==0.0.208"
+langchain = "==0.0.308"
 openai = "*"
 tiktoken = "*"
 python-dotenv = "*"
