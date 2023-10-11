@@ -9,13 +9,15 @@ from typing import Callable
 from litestar.config.allowed_hosts import AllowedHostsConfig
 from litestar.status_codes import HTTP_200_OK
 from tools import google_tool
-from dotenv import load_dotenv
+from services import langchain_services
+# from dotenv import load_dotenv
 
-load_dotenv()
+# load_dotenv()
 
 # print(os.environ['ACTIVELOOP_TOKEN'])
 
-print(os.environ['GOOGLE_API_KEY'])
+# print(os.environ['GOOGLE_API_KEY'])
+
 
 class TestResponse(BaseModel):
     message: str
@@ -51,12 +53,14 @@ app = Litestar(route_handlers=[MyTest],
 
 # netu example crap
 
+
 def search_google(query):
     tool = google_tool.get_search_tool()
     result = tool.run(query)
     return result
 
+
 if __name__ == "__main__":
-    query = "OpenAI GPT-4 capabilities"
-    response = search_google(query)
-    print(response)
+    # query = "OpenAI GPT-4 capabilities"
+    langchain_services.searchQuery()
+    # print(response)
