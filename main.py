@@ -25,7 +25,7 @@ class TestResponse(BaseModel):
 
 allowedOrigins = [
     "http://127.0.0.1/:*",
-    "http://127.0.0.1:8100",
+    "http://127.0.0.1:3000",
     'capacitor://localhost',
     'ionic://localhost',
     'http://localhost',
