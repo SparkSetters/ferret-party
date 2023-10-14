@@ -14,3 +14,6 @@ htmlcov/
 dist/
 build/
 *.egg-info/
+
+netu-party-9354d350213f.json
+output.txt
