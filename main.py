@@ -10,18 +10,33 @@ from litestar.config.allowed_hosts import AllowedHostsConfig
 from litestar.status_codes import HTTP_200_OK
 from tools import google_tool
 from services import langchain_services
-# from dotenv import load_dotenv
+from langchain.llms import OpenAI
+from langchain.prompts import PromptTemplate
+from langchain.chains import LLMChain
+from typing import List
 
-# load_dotenv()
+OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
+llm = OpenAI(openai_api_key=OPENAI_API_KEY)
 
-# print(os.environ['ACTIVELOOP_TOKEN'])
+prompt = PromptTemplate(
+    input_variables=["industry1", "industry2", "topic", "exclusion1", "exclusion2", "date_start", "date_end"],
+    template=("List 5 emerging or smaller-scale {industry1} or {industry2}-focused {topic} projects between {date_start} and {date_end} that have formed tangible partnerships with traditional Web2 companies. "
+              "Exclude major brands or projects like {exclusion1} or {exclusion2}. "
+              "For each example, provide: "
+              "- The {topic} project name and its financial metrics (e.g., recent funding, valuation, revenue). "
+              "- The Web2 partner and a brief description of the partnership. "
+              "- The outcome or benefits of the partnership for both parties. "
+              "- Duration of the partnership. "
+              "- Feedback or reviews from users or customers. "
+              "- Any challenges faced and how they were addressed. "
+              "- The unique selling proposition (USP) of the partnership. "
+              "- A link or reference to the source of the information.")
+)
 
-# print(os.environ['GOOGLE_API_KEY'])
-
+chain = LLMChain(llm=llm, prompt=prompt)
 
 class TestResponse(BaseModel):
     message: str
-
 
 allowedOrigins = [
     "http://127.0.0.1/:*",
@@ -40,27 +55,35 @@ cors_config = CORSConfig(allow_origins=allowedOrigins,
                          expose_headers=[],
                          max_age=600)
 
+class LLMResponse(BaseModel):
+    results: List[str]
 
-class MyTest(Controller):
-    @get(path="/", status_code=HTTP_200_OK)
-    async def validate_route_handler(self) -> TestResponse:
-        return TestResponse(message="Response from Litestar")
-
-
-app = Litestar(route_handlers=[MyTest],
-               cors_config=cors_config
-               )
-
-# netu example crap
-
-
-def search_google(query):
-    tool = google_tool.get_search_tool()
-    result = tool.run(query)
-    return result
+class LLMController(Controller):
+    @get(path="/llm_results", status_code=HTTP_200_OK)
+    async def get_llm_results(self) -> LLMResponse:
+        response = chain.run({
+            'topic': "NFT", 
+            'industry1': "Web3", 
+            'industry2': "NFT", 
+            'exclusion1': "OpenSea", 
+            'exclusion2': "CryptoPunks", 
+            'date_start': "January 2023", 
+            'date_end': "December 2023"
+        })
+        return LLMResponse(results=response)
 
 
 if __name__ == "__main__":
-    query = "What's the date?"
-    response = search_google(query)
+    app = Litestar(route_handlers=[LLMController],
+                   cors_config=cors_config
+                   )
+    response = chain.run({
+        'topic': "NFT", 
+        'industry1': "Web3", 
+        'industry2': "NFT", 
+        'exclusion1': "OpenSea", 
+        'exclusion2': "CryptoPunks", 
+        'date_start': "January 2023", 
+        'date_end': "December 2023"
+    })
     print(response)
