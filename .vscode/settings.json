@@ -1,6 +1,8 @@
 {
   "[python]": {
-    "editor.defaultFormatter": "ms-python.python"
+    "editor.defaultFormatter": "ms-python.black-formatter",
+    "python.pythonPath": "C:\\Users\\Cube_Mk_II\\.virtualenvs\\ferret-party-dRhlz-P-\\Scripts\\python.exe",
   },
-  "python.formatting.provider": "none"
+  "git.ignoreLimitWarning": true,
+  "python.formatting.provider": "none",
 }
